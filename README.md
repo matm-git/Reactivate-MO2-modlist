@@ -19,7 +19,7 @@ Installation instructions
 3) Edit config.json to define which mods should be automatically enabled and disabled
 
 Modlist update instructions
-1) Download latest modlist from: https://www.nexusmods.com/skyrimspecialedition/mods/86817/
+1) Download latest modlist nexusmods
 2) Extract the downloaded file and open the wabbajack file
 3) Activate 'overwrite' option and install into target directory (MO2)
 4) Open MO2. It should be open, while you run the script via Windows Explorer: ActivateMods.ps1
