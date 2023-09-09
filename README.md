@@ -22,7 +22,7 @@ Modlist update instructions
 1) Download latest modlist from: https://www.nexusmods.com/skyrimspecialedition/mods/86817/
 2) Extract the downloaded file and open the wabbajack file
 3) Activate 'overwrite' option and install into target directory (MO2)
-4) Open MO2 and run the script (doubleclick): ActivateMods.ps1
+4) Open MO2. It should be open, while you run the script via Windows Explorer: ActivateMods.ps1
 5) Press F5, then close MO2
-6) Run the Script (doubleclick): SortPlugins.ps1
+6) Run the Script via Windows Explorer: SortPlugins.ps1
 The scripts create backups of your modlist and plugin load order. So in case something breaks, just restore those backups via MO2 (yellow arrow)
