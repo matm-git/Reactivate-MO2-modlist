@@ -1,0 +1,60 @@
+{
+
+
+    "comment1": "Path to MO2 source profile with configuration files",
+    "path": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul\\",
+    "pathAlternateProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - alternate profile\\",
+    
+    "comment2": "Automatically activate all mods after this one",
+    "lastModlistPlugin": "Synthesis.esp",
+
+    "comment3": "With this list you can manage plugin dependencies. (e.g. load Plugin A directly after plugin B). Must be at least two tuples, so that it is clear this is a multidimensional array",
+    "pluginDependencies": [
+        ["Blowing in the Wind SSE.esp", "SMIM-SE-Merged-All.esp"],
+        ["Vivid Weathers SE - Bruma Patch.esp", "DudestiaOutfitChanger.esp"],
+        ["Vivid Weathers SE - Wyrmstooth.esp", "DudestiaOutfitChanger.esp"],
+        ["Vivid WeathersSE.esp", "DudestiaOutfitChanger.esp"],
+        ["Vivid_TS_Patch_Ominous_WaterFix.esp", "TrueStormsSE.esp"],
+        ["Vivid_TS_SoS_Patch.esp", "TrueStormsSE.esp"],
+        ["CrestysDistantMists.esp", "TrueStormsSE.esp"],
+        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "TrueStormsSE.esp"]
+    ],
+
+    "pluginDependenciesAlternateProfile": [
+        ["AAA.esm", "BBB.esm"],
+        ["CCC.esm", "DDD.esm"]
+    ],
+
+
+    "comment4": "Deactivate all mods with the following names",
+    "deactivateMods": [
+        "Auto Sneak and Jump VR",
+        "Azurite Weathers",
+        "True Storms - Azurite Weathers",
+        "Obsidian Mountain Fogs",
+        "VR Performance Kit - Enable",
+        "VR Performance Kit - FSR Balanced",
+        "Skyrim Upscaler VR - Nvida DLAA"
+      ],
+
+      "comment5": "Deactivate all mods with the following names, or partly matching those strings (e.g. '[NoDelete] a' activates all mods starting with this text)",
+      "activateMods": [
+        "[NoDelete] a",
+        "Vivid Weathers - Definitive Edition",
+        "Picta Series - Improved Sky Meshes",
+        "True Storms - Vivid Weathers",
+        "Cresty's Distant Mists (3, 4)",
+        "Cresty's Distant Mists - Vivid Weather and TrueStorms Patch",
+        "Skyrim Upscaler VR - Nvidia DLSS - Quality"
+    ],
+
+    "deactivateModsAlternateProfile": [
+        "Sofia - The Funny Fully Voiced Follower",
+        "Sofia Funny Fully Voiced Follower BHUNP-3BA-UUNP SE"
+      ],
+
+      "activateModsAlternateProfile": [
+        "[NoDelete] x"
+      ]
+}
+  
