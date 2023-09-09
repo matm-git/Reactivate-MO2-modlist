@@ -20,8 +20,8 @@ Installation instructions
 
 Modlist update instructions
 1) Download latest modlist from nexusmods
-2) Extract the downloaded file and open the wabbajack file
-3) Activate 'overwrite' option and install into target directory (MO2)
+2) Extract the downloaded file and open the Wabbajack file
+3) In Wabbajack activate 'overwrite' option and install into target directory (MO2)
 4) Open MO2. It should be open, while you run the script via Windows Explorer: ActivateMods.ps1
 5) Press F5 in MO2, then close MO2
 6) Run the Script via Windows Explorer: SortPlugins.ps1
