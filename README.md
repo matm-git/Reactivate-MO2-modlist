@@ -18,6 +18,7 @@ Installation instructions
 2) Create a new mod in your MO2 instance, e.g. '[NoDelete] 0 Autoupdate MO2 Config' and copy all files there. Remember to start the name with [NoDelete] to avoid it being removed with the next update
 3) Edit config.json to define which mods should be automatically enabled and disabled and give dependencies.
    Please note: Dependencies are a bit limited and do not reorder recursively.
+   The script activates all plugins that are part of a mod. If you do not want to activate some optional plugins, just set them to hidden in MO2.
 
 Modlist update instructions
 1) Download latest modlist from nexusmods
