@@ -15,9 +15,9 @@ With default configuration mods with the following prefixes are activated per de
     * Anything else will not be activated automatically
 
 Installation instructions
-1) Download all the files here
-2) Create a new mod in your MO2 instance, e.g. '[NoDelete] 0 Autoupdate MO2 Config' and copy all files there. Remember to start the name with [NoDelete] to avoid it being removed with the next update
-3) Edit config.json to define which mods should be automatically enabled and disabled and give dependencies.
+1) Download the zip file from here (Releases)
+2) Open MO2 and install the zip as a mod and name it '[NoDelete] 0 Autoupdate MO2 Config'
+4) Edit config.json to define which mods should be automatically enabled and disabled and give dependencies.
    The script activates all plugins that are part of a mod. If you do not want to activate some optional plugins, just set them to hidden in MO2.
 
 Modlist update instructions
