@@ -7,8 +7,8 @@ First, to overcome this manual sorting we have to follow some simple rules for o
 - Use alphabetical prefixes to put the mods in order. After updating the modlist via Wabbajack custom mods are sorted alphabetically per default. The prefixes will be used for default sorting and define which mod may overwrite contents of another mod. So think of the correct order once. 
 - Per default plugin load order follows the same alphabetical sorting. But there is an option to define dependencies (load mod A after B) for certain mods. More on this below.
 - Create and use empty mods as separators for the sake of readability (optional)
-When you update or restore (yellow arrow) the modlist all your custom mods will be deactivated. This is where the Powershell scripts kick in which automatically deactivates unwanted mods and activates your custom mods.
-With default configuration mods with the following prefixes activated per default:
+When you update or restore (yellow arrow) the modlist all your custom mods will be deactivated. This is where the Powershell script kicks in which automatically deactivates unwanted mods and activates your custom mods.
+With default configuration mods with the following prefixes are activated per default:
     * [NoDelete] a* Will be activated automatically in default profile
     * [NoDelete] x* Will be activated automatically in alternate profile
     * Anything else will not be activated automatically
@@ -23,7 +23,7 @@ Modlist update instructions
 1) Download latest modlist from nexusmods
 2) Extract the downloaded file and open the Wabbajack file
 3) In Wabbajack activate 'overwrite' option and install into target directory (MO2)
-4) Open MO2. It should be open, while you run the script via Windows Explorer: ActivateMods.ps1
-5) Press F5 in MO2, then close MO2
-6) Run the Script via Windows Explorer: SortPlugins.ps1
+4) Open MO2 once so that it can generate/update the initial modlist
+5) Close MO2
+6) Run the script via Windows Explorer: ActivateMods.ps1
 The scripts create backups of your modlist and plugin load order. So in case something breaks, just restore those backups via MO2 (yellow arrow)
