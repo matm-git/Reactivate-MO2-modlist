@@ -10,6 +10,7 @@ First, to overcome this manual sorting we have to follow some simple rules for o
   
 When you update or restore (yellow arrow) the modlist all your custom mods will be deactivated. This is where the Powershell script kicks in which automatically deactivates unwanted mods and activates your custom mods.
 With default configuration mods with the following prefixes are activated per default:
+
     * [NoDelete] a* Will be activated automatically in default profile
     * [NoDelete] x* Will be activated automatically in alternate profile
     * Anything else will not be activated automatically
