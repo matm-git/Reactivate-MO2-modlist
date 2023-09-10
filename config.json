@@ -2,32 +2,30 @@
 
 
     "comment1": "Path to MO2 source profile with configuration files",
-    "path": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul\\",
-    "pathAlternateProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - alternate profile\\",
+    "folderDefaultProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - NSFW\\",
+    "folderAlternateProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - alternate profile\\",
+    "modsDirectory": "..\\",
     
-    "comment2": "Automatically activate all mods after this one",
-    "lastModlistPlugin": "Synthesis.esp",
 
     "comment3": "With this list you can manage plugin dependencies. (e.g. load Plugin A directly after plugin B). Must be at least two tuples, so that it is clear this is a multidimensional array",
-    "pluginDependencies": [
+    "pluginDependenciesDefaultProfile": [
         ["Blowing in the Wind SSE.esp", "SMIM-SE-Merged-All.esp"],
         ["Vivid Weathers SE - Bruma Patch.esp", "DudestiaOutfitChanger.esp"],
-        ["Vivid Weathers SE - Wyrmstooth.esp", "DudestiaOutfitChanger.esp"],
-        ["Vivid WeathersSE.esp", "DudestiaOutfitChanger.esp"],
+        ["Vivid Weathers SE - Wyrmstooth.esp", "Vivid Weathers SE - Bruma Patch.esp"],
+        ["Vivid WeathersSE.esp", "Vivid Weathers SE - Wyrmstooth.esp"],
         ["Vivid_TS_Patch_Ominous_WaterFix.esp", "TrueStormsSE.esp"],
-        ["Vivid_TS_SoS_Patch.esp", "TrueStormsSE.esp"],
-        ["CrestysDistantMists.esp", "TrueStormsSE.esp"],
-        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "TrueStormsSE.esp"]
+        ["Vivid_TS_SoS_Patch.esp", "Vivid_TS_Patch_Ominous_WaterFix.esp"],
+        ["CrestysDistantMists.esp", "Vivid_TS_SoS_Patch.esp"],
+        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "CrestysDistantMists.esp"]
     ],
 
     "pluginDependenciesAlternateProfile": [
-        ["AAA.esm", "BBB.esm"],
-        ["CCC.esm", "DDD.esm"]
+        ["AAAAAAAA.esm", "BBBBBBBBB.esm"],
+        ["CCCCCCCCCCCC.esm", "DDDDDDDDDD.esm"] 
     ],
 
-
-    "comment4": "Deactivate all mods with the following names",
-    "deactivateMods": [
+    "comment4": "",
+    "deactivateModsDefaultProfile": [
         "Auto Sneak and Jump VR",
         "Azurite Weathers",
         "True Storms - Azurite Weathers",
@@ -37,8 +35,7 @@
         "Skyrim Upscaler VR - Nvida DLAA"
       ],
 
-      "comment5": "Deactivate all mods with the following names, or partly matching those strings (e.g. '[NoDelete] a' activates all mods starting with this text)",
-      "activateMods": [
+    "activateModsDefaultProfile": [
         "[NoDelete] a",
         "Vivid Weathers - Definitive Edition",
         "Picta Series - Improved Sky Meshes",
@@ -49,8 +46,15 @@
     ],
 
     "deactivateModsAlternateProfile": [
+        "Extended Encounters",
+        "Lucien - Immersive Fully Voiced Male Follower",
+        "Pandorable's Lucien replacer",
         "Sofia - The Funny Fully Voiced Follower",
-        "Sofia Funny Fully Voiced Follower BHUNP-3BA-UUNP SE"
+        "Sofia Funny Fully Voiced Follower BHUNP-3BA-UUNP SE",
+        "Pandorable's Sofia replacer",
+        "Beyond Skyrim - DLC Integration Patch 1.6.2",
+        "Bruma- Imperial City LOD Fix",
+        "Beyond Skyrim Bruma NPC Improvement"
       ],
 
       "activateModsAlternateProfile": [
