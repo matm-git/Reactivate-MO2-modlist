@@ -32,13 +32,12 @@ function switchPlugins {
         
         $modname_masked = $modname -replace '(\[|\])', '`$1'        # Powershell does not like those braces: [ ] So you need to mask them
         $pluginList = Get-ChildItem -Path ($config.modsDirectory+$modname_masked+"\*") -Include "*.esm", "*.esp" -Name
-
         # Get all .esp's for the mod
         foreach ($plugin in $pluginList) { 
             if ($verbose) { write-Host ("Added plugin "+$plugin +" to "+$pluginFilename + " and "+$LoadorderFilename) }
             # Remove the plugins from plugins.txt and loadorder.txt first
-            (Get-Content $pluginPath) | Where-Object { $_ -notmatch ("^\*?"+[regex]::Escape($plugin)) } | Set-Content $pluginPath
-            (Get-Content $LoadorderPath) | Where-Object { $_ -notmatch ([regex]::Escape($plugin)) } | Set-Content $LoadorderPath
+            (Get-Content $pluginPath) | Where-Object { $_ -notmatch ("^\*?"+[regex]::Escape($plugin) + "$") } | Set-Content $pluginPath
+            (Get-Content $LoadorderPath) | Where-Object { $_ -notmatch ([regex]::Escape($plugin) + "$") } | Set-Content $LoadorderPath
 
             # Add the plugin if it is to be added
             if ($type -eq 'activate')  {    
@@ -78,7 +77,7 @@ function ActivateTargetMods {
         $content = $content -replace [regex]::Escape('+' + $searchString), ('-' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
     }
 
-    # Active all mods (left side in MO2) given in the config  
+    # Activate all mods (left side in MO2) that match the pattern given in the config  
     foreach ($searchString in $activateMods) {
         #$matchingRows = Select-String -Path $folder -Pattern $searchString
         $matchingSubfolders = Get-ChildItem -Path $config.modsDirectory -Directory -Filter ("*$searchString*")
@@ -119,9 +118,11 @@ function ChangeSettings {
 }
 
 function RecreateAlternateProfile {
-    Write-Host "Recreating alternate profile located at "$$config.folderAlternateProfile
-    Remove-Item -LiteralPath $config.folderAlternateProfile -Force -Recurse
-    Copy-Item -Path $config.folderDefaultProfile -Destination $config.folderAlternateProfile -Recurse
+    Write-Host "Recreating alternate profile located at "$config.folderAlternateProfile
+    #Remove-Item -LiteralPath $config.folderAlternateProfile -Force -Recurse
+    Get-ChildItem $config.folderAlternateProfile -File | Remove-Item -Force
+    #Copy-Item -Path $config.folderDefaultProfile -Destination $config.folderAlternateProfile -Recurse
+    Get-ChildItem $config.folderDefaultProfile -File | Copy-Item -Destination $config.folderAlternateProfile
 }
 
 # Adjust plugin order
