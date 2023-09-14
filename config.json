@@ -7,7 +7,7 @@
     "modsDirectory": "..\\",
     
 
-    "comment3": "With this list you can manage plugin dependencies. (e.g. load Plugin A directly after plugin B). Must be at least two tuples, so that it is clear this is a multidimensional array",
+    "comment3": "With this list you can manage plugin dependencies. The syntax is always 'Load A directly after B'. Must be at least two tuples, so that it is clear this is a multidimensional array",
     "pluginDependenciesDefaultProfile": [
         ["Blowing in the Wind SSE.esp", "SMIM-SE-Merged-All.esp"],
         ["Vivid Weathers SE - Bruma Patch.esp", "DudestiaOutfitChanger.esp"],
@@ -16,7 +16,9 @@
         ["Vivid_TS_Patch_Ominous_WaterFix.esp", "TrueStormsSE.esp"],
         ["Vivid_TS_SoS_Patch.esp", "Vivid_TS_Patch_Ominous_WaterFix.esp"],
         ["CrestysDistantMists.esp", "Vivid_TS_SoS_Patch.esp"],
-        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "CrestysDistantMists.esp"]
+        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "CrestysDistantMists.esp"],
+        ["Fluffworks.esp", "DynamicAnimalVariantsPlus_Fluffworks.esp"],
+        ["DynamicAnimalVariantsPlus_Fluffworks.esp", "DynamicAnimalVariantsPlus.esp"]
     ],
 
     "pluginDependenciesAlternateProfile": [
