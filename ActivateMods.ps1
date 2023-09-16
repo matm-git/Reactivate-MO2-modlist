@@ -118,11 +118,17 @@ function ChangeSettings {
 }
 
 function RecreateAlternateProfile {
-    Write-Host "Recreating alternate profile located at "$config.folderAlternateProfile
-    #Remove-Item -LiteralPath $config.folderAlternateProfile -Force -Recurse
-    Get-ChildItem $config.folderAlternateProfile -File | Remove-Item -Force
-    #Copy-Item -Path $config.folderDefaultProfile -Destination $config.folderAlternateProfile -Recurse
-    Get-ChildItem $config.folderDefaultProfile -File | Copy-Item -Destination $config.folderAlternateProfile
+    if (Test-Path -Path $config.folderAlternateProfile -PathType Container) {
+        Write-Host "Recreating alternate profile located at "$config.folderAlternateProfile
+        #Remove-Item -LiteralPath $config.folderAlternateProfile -Force -Recurse
+        Get-ChildItem $config.folderAlternateProfile -File | Remove-Item -Force
+        #Copy-Item -Path $config.folderDefaultProfile -Destination $config.folderAlternateProfile -Recurse
+    } else {
+        Write-Host "Creating new profile at "$config.folderAlternateProfile
+        New-Item -ItemType Directory -Path $config.folderAlternateProfile
+    }
+    Get-ChildItem $config.folderDefaultProfile -File | Copy-Item -Destination $config.folderAlternateProfile      
+
 }
 
 # Adjust plugin order
