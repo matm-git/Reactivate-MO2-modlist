@@ -17,7 +17,7 @@ With default configuration mods with the following prefixes are activated per de
 
 Installation instructions
 1) Download the zip file from here (Releases)
-2) Open MO2 and install the zip as a mod and name it '[NoDelete] 0 Autoupdate MO2 Config'
+2) Open MO2 and install the zip as a mod and name it '[NoDelete] 0 Wabbajack Customizer'
 4) Edit config.json to define which mods should be automatically enabled and disabled and give dependencies.
    The script activates all plugins that are part of a mod. If you do not want to activate some optional plugins, just set them to hidden in MO2.
 
