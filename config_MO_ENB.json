@@ -1,0 +1,36 @@
+{
+
+  "comment1": "Path to MO2 source profile with configuration files with double backslashes, could be autodetect or something like ..\\..\\profiles\\Skyrim VR Minimalistic Overhaul\\",
+  "folderDefaultProfile": "autodetect",
+  "modsDirectory": "..\\",
+ 
+
+  "activateModsDefaultProfile": [
+    "Enable ENB - DLL",
+    "ENB Helper VR",
+    "VR Parallax Shader Fix"
+  ],
+
+
+  "comment2": "",
+  "deactivateModsDefaultProfile": [
+      "Community Shader",
+      "Complex Parallax Materials",
+      "Grass Collision",
+      "Grass Lighting",
+      "Light Limit Fix",
+      "LLF Particle Lights instead of Fake Glow",
+      "Rain Wetness Effects",
+      "ENB Light",
+      "Rudy HQ - More Lights for ENB SE",
+      "Particle Lights for ENB",
+      "JS Emissive Eyes SE"
+  ],
+
+    "comment3": "With this list you can manage plugin dependencies. The syntax is always 'Load A directly after B'",
+    "pluginDependenciesDefaultProfile": [
+  ]
+
+}
+
+  

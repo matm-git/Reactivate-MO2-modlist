@@ -1,4 +1,12 @@
-$config = Get-Content -Raw -Path config.json | ConvertFrom-Json
+param (
+    [string]$configParam
+)
+
+if ($configParam -eq $null) {
+    $configParam = "config_default.json"
+} 
+
+
 
 
 
@@ -144,17 +152,21 @@ function AdjustPluginOrder {
     $path = "{0}{1}" -f $folder, $filename
     # Load the contents of the file into a string variable.
     $content = Get-Content -Path $path
-    foreach ($plugin in $pluginDependencies) {     
-        $content = Get-Content -Path $path 
-        $lineIndex = $content.IndexOf($plugin[1])
-        if ($lineIndex -ge 0) {
-            if ($verbose) { write-Host ("Found "+$plugin[1]+" in line $lineIndex. Adding "+$plugin[0]+" after it.") }
-            #$content = $content | Where-Object { $_ -notmatch ([regex]::Escape($plugin[0])) }       # Remove the plugin which is being moved from the old position
-            $content = $content | Where-Object { $_ -ne $plugin[0] }       # Remove the plugin which is being moved from the old position
-            $lineIndex = $content.IndexOf($plugin[1])                                               # Due to the removal the position may have changed
-            $newFileContent = $content[0..$lineIndex] + $plugin[0] + $content[($lineIndex+1)..($content.Length - 1)]        # Create a new array with the plugin placed after the found one
-            $newFileContent | Set-Content -Path $path -Force                       # Write the modified content back to the file
+    if ($pluginDependencies.Count -gt 0) {
+        foreach ($plugin in $pluginDependencies) {     
+            $content = Get-Content -Path $path 
+            $lineIndex = $content.IndexOf($plugin[1])
+            if ($lineIndex -ge 0) {
+                if ($verbose) { write-Host ("Found "+$plugin[1]+" in line $lineIndex. Adding "+$plugin[0]+" after it.") }
+                #$content = $content | Where-Object { $_ -notmatch ([regex]::Escape($plugin[0])) }       # Remove the plugin which is being moved from the old position
+                $content = $content | Where-Object { $_ -ne $plugin[0] }       # Remove the plugin which is being moved from the old position
+                $lineIndex = $content.IndexOf($plugin[1])                                               # Due to the removal the position may have changed
+                $newFileContent = $content[0..$lineIndex] + $plugin[0] + $content[($lineIndex+1)..($content.Length - 1)]        # Create a new array with the plugin placed after the found one
+                $newFileContent | Set-Content -Path $path -Force                       # Write the modified content back to the file
+            }
         }
+    } else {
+        Write-Host "No config entries found with dependencies for plugins"
     }
 }
 
@@ -193,19 +205,73 @@ function validatePluginDependencies {
     }
 }
 
-
-# Main part of the script
-if (validatePluginDependencies -pluginDependencies $config.pluginDependenciesDefaultProfile) {
-    createBackup $config.folderDefaultProfile
-    ActivateTargetMods -activateMods $config.activateModsDefaultProfile -deactivateMods $config.deactivateModsDefaultProfile -folder $config.folderDefaultProfile
-    AdjustPluginOrder -folder $config.folderDefaultProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
-    ChangeSettings
-
-    if ($config.folderAlternateProfile -ne "" -and $config.folderAlternateProfile -ne $null -and (validatePluginDependencies -pluginDependencies $config.pluginDependenciesAlternateProfile)) {        # Only create alternate profile if the config parameter is set to use an alternate profile
-        RecreateAlternateProfile 
-        createBackup $config.folderAlternateProfile
-        ActivateTargetMods -activateMods $config.activateModsAlternateProfile -deactivateMods $config.deactivateModsAlternateProfile -folder $config.folderAlternateProfile
-        AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
-        AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesAlternateProfile
+function performValidations {
+    if (validatePluginDependencies -pluginDependencies $config.pluginDependenciesDefaultProfile) {
+        Write-Host "Plugin dependencies validated. Plugin order is okay." 
+    } else {
+        Write-Host "Error during validation of plugin dependencies. Exiting now." 
+        exit 1
     }
 }
+
+function checkAndKillMO2 {
+    if (Get-Process -Name "ModOrganizer" -ErrorAction SilentlyContinue) {
+        Write-Host "ModOrganizer is running. Killing it now before starting the script."
+        Stop-Process -Name "ModOrganizer"
+    }
+}
+
+function getConfig {
+    if (Test-Path -Path $configParam -PathType Leaf) {
+        Write-Host "Loading config "$configParam
+        $config = Get-Content -Raw -Path $configParam | ConvertFrom-Json
+        if ($config.folderDefaultProfile -eq "autodetect") {
+            $foundFiles = Get-ChildItem -Path "..\..\profiles\" -Filter "plugins.txt" -File -Recurse
+            if ($foundFiles.Count -eq 0) {
+                Write-Host "Cannot find the folder where MO2 configuration files (plugins.txt, modlist.txt) are located. Please search manually and enter the path in the configuration file under 'folderDefaultProfile'"
+            } elseif ($foundFiles.Count -eq 1) {
+                $config.folderDefaultProfile = $foundFiles.DirectoryName+"\"
+                Write-host "Updating MO2 configuration in folder: "$config.folderDefaultProfile
+            } else {
+                Write-Host "============================================================"
+                Write-Host "Please choose which profile should be changed:"
+                for ($i = 0; $i -lt $foundFiles.Count; $i++) {
+                    Write-Host ($i+1)". "$($foundFiles[$i].DirectoryName)
+                }
+                $userChoice = Read-Host "Select a number (1 - "$foundFiles.Count")"
+                if (($userChoice -match "^\d+$") -and ($userChoice -gt 0) -and ($userChoice -le $foundFiles.Count)) {
+                    $config.folderDefaultProfile = $($foundFiles[($userChoice-1)].DirectoryName)+"\"
+                    Write-host "Updating MO2 configuration in folder: "$config.folderDefaultProfile
+                } else {
+                    Write-Host "Wrong input, exiting now"
+                    exit 1
+                }
+            }    
+        }
+    }  else {
+        Write-Host $config" not available. Exiting program"
+        exit 1
+    }
+    return $config
+}
+
+
+# Main part of the script
+$config = getConfig
+performValidations
+checkAndKillMO2
+createBackup $config.folderDefaultProfile
+ActivateTargetMods -activateMods $config.activateModsDefaultProfile -deactivateMods $config.deactivateModsDefaultProfile -folder $config.folderDefaultProfile
+AdjustPluginOrder -folder $config.folderDefaultProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
+ChangeSettings
+
+if ($null -ne $config.folderAlternateProfile -and $config.folderAlternateProfile -ne "" -and (validatePluginDependencies -pluginDependencies $config.pluginDependenciesAlternateProfile)) {        # Only create alternate profile if the config parameter is set to use an alternate profile
+    RecreateAlternateProfile 
+    createBackup $config.folderAlternateProfile
+    ActivateTargetMods -activateMods $config.activateModsAlternateProfile -deactivateMods $config.deactivateModsAlternateProfile -folder $config.folderAlternateProfile
+    AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
+    AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesAlternateProfile
+}
+
+Write-Host "Press any key to close."
+Read-Host
