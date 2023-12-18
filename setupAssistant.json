@@ -1,0 +1,12 @@
+{
+
+  "activateMods": [
+    "NVIDIA Reflex Support - Nvidia Only",
+    "Skyrim Upscaler VR - Nvidia Only",
+    "The Sharper Eye - Sharpening Only",
+    "Skyrim Upscaler VR - Nvidia DLAA"
+  ],
+  "deactivateMods": [
+    "VR Performance Kit"
+  ]
+}

@@ -1,11 +1,7 @@
 {
 
   "comment1": "Path to MO2 source profile with configuration files with double backslashes, could be autodetect or something like ..\\..\\profiles\\Skyrim VR Minimalistic Overhaul\\",
-  "folderDefaultProfile": "autodetect",
-  "modsDirectory": "..\\",
- 
-
-  "activateModsDefaultProfile": [
+  "activateMods": [
     "NVIDIA Reflex Support - Nvidia Only",
     "Skyrim Upscaler VR - Nvidia Only",
     "Skyrim Upscaler VR - Nvidia DLAA",
@@ -14,12 +10,12 @@
 
 
   "comment2": "",
-  "deactivateModsDefaultProfile": [
+  "deactivateMods": [
       "VR Performance Kit"
   ],
 
     "comment3": "With this list you can manage plugin dependencies. The syntax is always 'Load A directly after B'",
-    "pluginDependenciesDefaultProfile": [
+    "pluginDependencies": [
   ]
 
 }

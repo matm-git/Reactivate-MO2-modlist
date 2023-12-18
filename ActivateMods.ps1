@@ -1,12 +1,19 @@
 param (
-    [string]$configParam
+    [string]$configParam,
+    [string]$targetProfile,
+    [string]$sourceProfile
 )
-
-if ($configParam -eq $null) {
-    $configParam = "config_default.json"
+if (($configParam -eq $null) -or ($configParam -eq "")) {
+    write-Host ("No configuration file passed, exiting")
+    Read-Host
+    exit 1
+    #$configParam = "config_default.json"
 } 
-
-
+if (($targetProfile -eq $null) -or ($targetProfile -eq "")) {
+    write-Host ("No targetProfile passed, exiting")
+    Read-Host
+    exit 1
+} 
 
 
 
@@ -105,8 +112,8 @@ function ChangeSettings {
     $backupfilename = $filename + "." + (Get-Date -Format "yyyy_MM_dd_HH_mm_ss")
 
     # Build the full path and the path for the backup
-    $path = "{0}{1}" -f $config.folderDefaultProfile, $filename
-    $backuppath = "{0}{1}" -f $config.folderDefaultProfile, $backupfilename
+    $path = "{0}{1}" -f $config.folderTargetProfile, $filename
+    $backuppath = "{0}{1}" -f $config.folderTargetProfile, $backupfilename
 
     # Check first if the setting needs to be updated
     $content = Get-Content -Path $path
@@ -125,17 +132,18 @@ function ChangeSettings {
     }
 }
 
-function RecreateAlternateProfile {
-    if (Test-Path -Path $config.folderAlternateProfile -PathType Container) {
-        Write-Host "Recreating alternate profile located at "$config.folderAlternateProfile
+function RecreateProfile {
+    if (Test-Path -Path $config.folderTargetProfile -PathType Container) {
+        Write-Host "Recreating alternate profile located at "$config.folderTargetProfile
         #Remove-Item -LiteralPath $config.folderAlternateProfile -Force -Recurse
-        Get-ChildItem $config.folderAlternateProfile -File | Remove-Item -Force
-        #Copy-Item -Path $config.folderDefaultProfile -Destination $config.folderAlternateProfile -Recurse
+        Get-ChildItem $config.folderTargetProfile -File | Remove-Item -Force
+        #Copy-Item -Path $config.folderTargetProfile -Destination $config.folderAlternateProfile -Recurse
     } else {
-        Write-Host "Creating new profile at "$config.folderAlternateProfile
-        New-Item -ItemType Directory -Path $config.folderAlternateProfile
+        Write-Host "Creating new profile at "$config.folderTargetProfile
+        New-Item -ItemType Directory -Path $config.folderTargetProfile
     }
-    Get-ChildItem $config.folderDefaultProfile -File | Copy-Item -Destination $config.folderAlternateProfile      
+    #Get-ChildItem $config.folderTargetProfile -File | Copy-Item -Destination $sourceProfile
+    Get-ChildItem $sourceProfile -File | Copy-Item -Destination $config.folderTargetProfile
 
 }
 
@@ -206,10 +214,11 @@ function validatePluginDependencies {
 }
 
 function performValidations {
-    if (validatePluginDependencies -pluginDependencies $config.pluginDependenciesDefaultProfile) {
+    if (validatePluginDependencies -pluginDependencies $config.pluginDependencies) {
         Write-Host "Plugin dependencies validated. Plugin order is okay." 
     } else {
         Write-Host "Error during validation of plugin dependencies. Exiting now." 
+        Read-Host
         exit 1
     }
 }
@@ -221,38 +230,22 @@ function checkAndKillMO2 {
     }
 }
 
+
 function getConfig {
-    if (Test-Path -Path $configParam -PathType Leaf) {
+    if (Test-Path -Path $configParam -PathType leaf) {
+    #if (Test-Path $configParam) {
         Write-Host "Loading config "$configParam
         $config = Get-Content -Raw -Path $configParam | ConvertFrom-Json
-        if ($config.folderDefaultProfile -eq "autodetect") {
-            $foundFiles = Get-ChildItem -Path "..\..\profiles\" -Filter "plugins.txt" -File -Recurse
-            if ($foundFiles.Count -eq 0) {
-                Write-Host "Cannot find the folder where MO2 configuration files (plugins.txt, modlist.txt) are located. Please search manually and enter the path in the configuration file under 'folderDefaultProfile'"
-            } elseif ($foundFiles.Count -eq 1) {
-                $config.folderDefaultProfile = $foundFiles.DirectoryName+"\"
-                Write-host "Updating MO2 configuration in folder: "$config.folderDefaultProfile
-            } else {
-                Write-Host "============================================================"
-                Write-Host "Please choose which profile should be changed:"
-                for ($i = 0; $i -lt $foundFiles.Count; $i++) {
-                    Write-Host ($i+1)". "$($foundFiles[$i].DirectoryName)
-                }
-                $userChoice = Read-Host "Select a number (1 - "$foundFiles.Count")"
-                if (($userChoice -match "^\d+$") -and ($userChoice -gt 0) -and ($userChoice -le $foundFiles.Count)) {
-                    $config.folderDefaultProfile = $($foundFiles[($userChoice-1)].DirectoryName)+"\"
-                    Write-host "Updating MO2 configuration in folder: "$config.folderDefaultProfile
-                } else {
-                    Write-Host "Wrong input, exiting now"
-                    exit 1
-                }
-            }    
-        }
+        #$config.folderTargetProfile = $targetProfile
+        $config | Add-Member -MemberType NoteProperty -Name "folderTargetProfile" -Value $targetProfile
+        #$config.modsDirectory = "..\"
+        $config | Add-Member -MemberType NoteProperty -Name "modsDirectory" -Value "..\"
     }  else {
-        Write-Host $config" not available. Exiting program"
+        Write-Host $configParam" not available. Exiting program"
+        Read-Host
         exit 1
     }
-    return $config
+    return $config    
 }
 
 
@@ -260,18 +253,14 @@ function getConfig {
 $config = getConfig
 performValidations
 checkAndKillMO2
-createBackup $config.folderDefaultProfile
-ActivateTargetMods -activateMods $config.activateModsDefaultProfile -deactivateMods $config.deactivateModsDefaultProfile -folder $config.folderDefaultProfile
-AdjustPluginOrder -folder $config.folderDefaultProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
-ChangeSettings
-
-if ($null -ne $config.folderAlternateProfile -and $config.folderAlternateProfile -ne "" -and (validatePluginDependencies -pluginDependencies $config.pluginDependenciesAlternateProfile)) {        # Only create alternate profile if the config parameter is set to use an alternate profile
-    RecreateAlternateProfile 
-    createBackup $config.folderAlternateProfile
-    ActivateTargetMods -activateMods $config.activateModsAlternateProfile -deactivateMods $config.deactivateModsAlternateProfile -folder $config.folderAlternateProfile
-    AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesDefaultProfile
-    AdjustPluginOrder -folder $config.folderAlternateProfile -pluginDependencies $config.pluginDependenciesAlternateProfile
+createBackup $config.folderTargetProfile
+if (($sourceProfile -ne $null) -and ($sourceProfile -ne "") -and ($sourceProfile -ne "None")) {
+    if (Test-Path -Path $sourceProfile -PathType Container) { RecreateProfile } 
+    else { write-host "Source Profile could not be opened"    }
 }
+ActivateTargetMods -activateMods $config.activateMods -deactivateMods $config.deactivateMods -folder $config.folderTargetProfile
+AdjustPluginOrder -folder $config.folderTargetProfile -pluginDependencies $config.pluginDependencies
+ChangeSettings
 
 Write-Host "Press any key to close."
 Read-Host

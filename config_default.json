@@ -1,66 +1,73 @@
 {
+"comment1": "",
+"activateMods": [
+  "[NoDelete] a",
+  "Azurite Weathers",
+  "Supreme Weathers for Azurite Weathers",
+  "Dynamic Volumetric Lighting and Sun Shadows",
+  "Obsidian Mountain Fogs",
+  "Volumetric Mists - Dense VR",
+  "Skyrim Upscaler VR - Nvidia Only",
+  "Skyrim Upscaler VR - Nvidia DLAA",
+  "NVIDIA Reflex Support - Nvidia Only",
+  "Glamur Reshade"
+],
 
 
-    "comment1": "Path to MO2 source profile with configuration files",
-    "folderDefaultProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - NSFW\\",
-    "folderAlternateProfile": "..\\..\\profiles\\Skyrim VR Minimalistic Overhaul - alternate profile\\",
-    "modsDirectory": "..\\",
-    
+"comment2": "",
+"deactivateMods": [
+    "Auto Sneak and Jump VR",
+    "Skyrim 3D Rocks",
+    "Crouch To Dodge VR - Dodge Naturally",
+    "Cathedral - 3D Thicket and Dead Shrub",
+    "Sofia - The Funny Fully Voiced Follower",
+    "Sofia Funny Fully Voiced Follower BHUNP-3BA-UUNP SE",
+    "Pandorable's Sofia replacer",
+    "SunHelm Survival",
+    "DX Pornstar Fashion SE -CBBE -3BA-BHUNP",
+    "NAT.ENB III",
+    "Rudy NAT3 ADDONS",
+    "ENB Preset",
+    "Cresty's",
+    "Volumetric Mists - Subtle",
+    "Volumetric Mists - Legacy VR",
+    "VR Performance Kit",
+    "Dragon War - A Dragon Overhaul",
+    "GoT HotD Dragons",
+    "GoT Dragons",
+    "The Sharper Eye - Sharpening Only",
+    "Better Dirt Cliffs and Alphas 2K",
+    "SRP Landscapes 2K",
+    "Majestic Mountains",
+    "Skyrim - A Mountainous Experience",
+    "Northfires Photoreal Mountains",
+    "Terrain Parallax - 2K",
+    "VR FPS Stabilizer",
+    "Loot and Degradation",
+    "Splashes of Storms"
+  ],
 
-    "comment3": "With this list you can manage plugin dependencies. The syntax is always 'Load A directly after B'. Must be at least two tuples, so that it is clear this is a multidimensional array",
-    "pluginDependenciesDefaultProfile": [
-        ["Blowing in the Wind SSE.esp", "SMIM-SE-Merged-All.esp"],
-        ["Vivid Weathers SE - Bruma Patch.esp", "DudestiaOutfitChanger.esp"],
-        ["Vivid Weathers SE - Wyrmstooth.esp", "Vivid Weathers SE - Bruma Patch.esp"],
-        ["Vivid WeathersSE.esp", "Vivid Weathers SE - Wyrmstooth.esp"],
-        ["Vivid_TS_Patch_Ominous_WaterFix.esp", "TrueStormsSE.esp"],
-        ["Vivid_TS_SoS_Patch.esp", "Vivid_TS_Patch_Ominous_WaterFix.esp"],
-        ["CrestysDistantMists.esp", "Vivid_TS_SoS_Patch.esp"],
-        ["CrestysDistantMists Patch for Vivid Weather+TrueStorms.esp", "CrestysDistantMists.esp"],
-        ["Fluffworks.esp", "DynamicAnimalVariantsPlus_Fluffworks.esp"],
-        ["DynamicAnimalVariantsPlus_Fluffworks.esp", "DynamicAnimalVariantsPlus.esp"]
-    ],
+  "comment3": "With this list you can manage plugin dependencies. The syntax is always 'Load A directly after B'. Must be at least two tuples, so that it is clear this is a multidimensional array",
+  "pluginDependencies": [
+    ["Audio Mods xmerged.esp", "Relationship Dialogue Overhaul.esp"],
+    ["Bruma Patches xmerged.esp", "Simplicity of Snow - BSBruma Patch.esp"],
+    ["Locked Chests Have Keys merged.esp", "NoStagger.esp"],    
+    ["Blowing in the Wind SSE.esp", "SMIM-SE-Merged-All.esp"],
+    ["Mesh replacer merged.esp", "Blowing in the Wind SSE.esp"],
+    ["Azurite Weathers II.esp", "DudestiaOutfitChanger.esp"],
+    ["DVLaSS.esp", "Azurite Weathers II.esp"],
+    ["Obsidian Mountain Fogs.esp", "DVLaSS.esp"],
+    ["VolumeticMists.esp", "Obsidian Mountain Fogs.esp"],
+    ["VolumeticMistsSolstheim.esp", "VolumeticMists.esp"],
+    ["DynamicAnimalVariantsPlus.esp", "RealRabbitsHD.esp"],
+    ["DynamicAnimalVariantsPlus_Fluffworks.esp", "DynamicAnimalVariantsPlus.esp"],
+    ["Fluffworks.esp", "DynamicAnimalVariantsPlus_Fluffworks.esp"],
+    ["Atlantean Landscape.esp", "Realistic-Voice.esp"],
+    ["Parallax TXST Fixes merged.esp", "Atlantean Landscape.esp"],
+    ["Realistic Water Two merged.esp", "Parallax TXST Fixes merged.esp"]  
+]
 
-    "pluginDependenciesAlternateProfile": [
-        ["AAAAAAAA.esm", "BBBBBBBBB.esm"],
-        ["CCCCCCCCCCCC.esm", "DDDDDDDDDD.esm"] 
-    ],
 
-    "comment4": "",
-    "deactivateModsDefaultProfile": [
-        "Auto Sneak and Jump VR",
-        "Azurite Weathers",
-        "True Storms - Azurite Weathers",
-        "Obsidian Mountain Fogs",
-        "VR Performance Kit - Enable",
-        "VR Performance Kit - FSR Balanced",
-        "Skyrim Upscaler VR - Nvida DLAA"
-      ],
-
-    "activateModsDefaultProfile": [
-        "[NoDelete] a",
-        "Vivid Weathers - Definitive Edition",
-        "Picta Series - Improved Sky Meshes",
-        "True Storms - Vivid Weathers",
-        "Cresty's Distant Mists (3, 4)",
-        "Cresty's Distant Mists - Vivid Weather and TrueStorms Patch",
-        "Skyrim Upscaler VR - Nvidia DLSS - Quality"
-    ],
-
-    "deactivateModsAlternateProfile": [
-        "Extended Encounters",
-        "Lucien - Immersive Fully Voiced Male Follower",
-        "Pandorable's Lucien replacer",
-        "Sofia - The Funny Fully Voiced Follower",
-        "Sofia Funny Fully Voiced Follower BHUNP-3BA-UUNP SE",
-        "Pandorable's Sofia replacer",
-        "Beyond Skyrim - DLC Integration Patch 1.6.2",
-        "Bruma- Imperial City LOD Fix",
-        "Beyond Skyrim Bruma NPC Improvement"
-      ],
-
-      "activateModsAlternateProfile": [
-        "[NoDelete] x"
-      ]
 }
+
   
