@@ -91,7 +91,7 @@ function ActivateTargetMods {
         }
         #content = $content -replace [regex]::Escape('+' + $searchString), ('-' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
         $searchpattern = '\+(.*?' + [regex]::Escape($searchString) + ')'
-        $content = $content -replace $searchpattern, ('-$1' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
+        $content = $content -replace $searchpattern, ('-$1')   # Then generally deactivate all that match this string in modlist.txt
     }
 
     # Activate all mods (left side in MO2) that match the pattern given in the config  
@@ -104,7 +104,7 @@ function ActivateTargetMods {
         }
         #$content = $content -replace [regex]::Escape('-' + $searchString), ('+' + $searchString)        # Then generally activate all that match this string in modlist.txt
         $searchpattern = '\-(.*?' + [regex]::Escape($searchString) + ')'
-        $content = $content -replace $searchpattern, ('+$1' + $searchString)   # Then generally deactivate all that match this string in modlist.txt        
+        $content = $content -replace $searchpattern, ('+$1')   # Then generally deactivate all that match this string in modlist.txt        
     }
     $content | Set-Content -Path $path
     Write-Host "Deactivated unwanted mods and activated desired mods."
