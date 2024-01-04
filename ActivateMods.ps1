@@ -89,7 +89,9 @@ function ActivateTargetMods {
             if ($verbose) { write-Host "Deactivating "$mod.Name }
             switchPlugins -modname $mod.Name -type 'deactivate' -folder $folder    # Then find related plugins to deactivate them in plugins.txt and loadorder.txt
         }
-        $content = $content -replace [regex]::Escape('+' + $searchString), ('-' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
+        #content = $content -replace [regex]::Escape('+' + $searchString), ('-' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
+        $searchpattern = '\+(.*?' + [regex]::Escape($searchString) + ')'
+        $content = $content -replace $searchpattern, ('-$1' + $searchString)   # Then generally deactivate all that match this string in modlist.txt
     }
 
     # Activate all mods (left side in MO2) that match the pattern given in the config  
@@ -100,7 +102,9 @@ function ActivateTargetMods {
             if ($verbose) { write-Host "Activating "$mod.Name }
             switchPlugins -modname $mod.Name -type 'activate' -folder $folder     # Then find related plugins to activate them  in plugins.txt and loadorder.txt
         }
-        $content = $content -replace [regex]::Escape('-' + $searchString), ('+' + $searchString)        # Then generally activate all that match this string in modlist.txt
+        #$content = $content -replace [regex]::Escape('-' + $searchString), ('+' + $searchString)        # Then generally activate all that match this string in modlist.txt
+        $searchpattern = '\-(.*?' + [regex]::Escape($searchString) + ')'
+        $content = $content -replace $searchpattern, ('+$1' + $searchString)   # Then generally deactivate all that match this string in modlist.txt        
     }
     $content | Set-Content -Path $path
     Write-Host "Deactivated unwanted mods and activated desired mods."
